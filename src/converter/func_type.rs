@@ -32,15 +32,12 @@ impl Converter<FuncType> for &[u8] {
 
 #[cfg(test)]
 mod test {
-    use super::*;
-    use super::*;
-    use crate::conventions::types::*;
+    use crate::conventions::types::{FuncType, ValType};
     use crate::converter::Converter;
-    use std::io::Read;
 
     #[test]
     fn convert_collectly_nil_to_nil() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x60u8, 0x00u8, 0x00u8];
+        let src: Vec<u8> = vec![0x60u8, 0x00u8, 0x00u8];
         let result: FuncType = (&src[..]).convert()?;
         let expected: FuncType = FuncType::new(Vec::new(), Vec::new());
 
@@ -49,8 +46,32 @@ mod test {
     }
 
     #[test]
+    fn convert_collectly_i32_i32_to_i32() -> Result<(), String> {
+        let src: Vec<u8> = vec![0x60u8, 0x02u8, 0x7fu8, 0x7fu8, 0x01u8, 0x7fu8];
+        let result: FuncType = (&src[..]).convert()?;
+        let params = vec![ValType::I32(None), ValType::I32(None)];
+        let results = vec![ValType::I32(None)];
+        let expected: FuncType = FuncType::new(params, results);
+
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
+    #[test]
+    fn convert_collectly_i32_to_i32_i32() -> Result<(), String> {
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x02u8, 0x7fu8, 0x7fu8];
+        let result: FuncType = (&src[..]).convert()?;
+        let params = vec![ValType::I32(None)];
+        let results = vec![ValType::I32(None), ValType::I32(None)];
+        let expected: FuncType = FuncType::new(params, results);
+
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
+    #[test]
     fn convert_collectly_i32_to_i32() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x01u8, 0x7fu8];
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x01u8, 0x7fu8];
         let result: FuncType = (&src[..]).convert()?;
         let params = vec![ValType::I32(None)];
         let results = vec![ValType::I32(None)];
@@ -59,9 +80,46 @@ mod test {
         assert_eq!(expected, result);
         Ok(())
     }
+
+    #[test]
+    fn convert_collectly_i64_to_i64() -> Result<(), String> {
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7eu8, 0x01u8, 0x7eu8];
+        let result: FuncType = (&src[..]).convert()?;
+        let params = vec![ValType::I64(None)];
+        let results = vec![ValType::I64(None)];
+        let expected: FuncType = FuncType::new(params, results);
+
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
+    #[test]
+    fn convert_collectly_f32_to_f32() -> Result<(), String> {
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7du8, 0x01u8, 0x7du8];
+        let result: FuncType = (&src[..]).convert()?;
+        let params = vec![ValType::F32(None)];
+        let results = vec![ValType::F32(None)];
+        let expected: FuncType = FuncType::new(params, results);
+
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
+    #[test]
+    fn convert_collectly_f64_to_f64() -> Result<(), String> {
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7cu8, 0x01u8, 0x7cu8];
+        let result: FuncType = (&src[..]).convert()?;
+        let params = vec![ValType::F64(None)];
+        let results = vec![ValType::F64(None)];
+        let expected: FuncType = FuncType::new(params, results);
+
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
     #[test]
     fn convert_collectly_i32_to_nil() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x00u8];
+        let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x00u8];
         let result: FuncType = (&src[..]).convert()?;
         let params = vec![ValType::I32(None)];
         let expected: FuncType = FuncType::new(params, Vec::new());

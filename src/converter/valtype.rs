@@ -24,14 +24,12 @@ impl Converter<ValType> for &[u8] {
 
 #[cfg(test)]
 mod test {
-    use super::*;
-    use crate::conventions::types::*;
+    use crate::conventions::types::ValType;
     use crate::converter::Converter;
-    use std::io::Read;
 
     #[test]
     fn convert_collectly_i32() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x7fu8];
+        let src: Vec<u8> = vec![0x7fu8];
         let result: ValType = (&src[..]).convert()?;
 
         assert_eq!(ValType::I32(None), result);
@@ -40,7 +38,7 @@ mod test {
 
     #[test]
     fn convert_collectly_i64() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x7eu8];
+        let src: Vec<u8> = vec![0x7eu8];
         let result: ValType = (&src[..]).convert()?;
 
         assert_eq!(ValType::I64(None), result);
@@ -49,7 +47,7 @@ mod test {
 
     #[test]
     fn convert_collectly_f32() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x7du8];
+        let src: Vec<u8> = vec![0x7du8];
         let result: ValType = (&src[..]).convert()?;
 
         assert_eq!(ValType::F32(None), result);
@@ -58,7 +56,7 @@ mod test {
 
     #[test]
     fn convert_collectly_f64() -> Result<(), String> {
-        let mut src: Vec<u8> = vec![0x7cu8];
+        let src: Vec<u8> = vec![0x7cu8];
         let result: ValType = (&src[..]).convert()?;
 
         assert_eq!(ValType::F64(None), result);

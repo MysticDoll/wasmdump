@@ -1,5 +1,3 @@
-use std::io::Read;
-
 pub mod func_type;
 pub mod valtype;
 
