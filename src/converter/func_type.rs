@@ -21,6 +21,11 @@ impl Converter<FuncType> for &[u8] {
         let result_count: usize = leb128::read::unsigned(self)
             .map_err(|_| "Error occured when read leb128 functype params")?
             as usize;
+
+        if result_count > 1 {
+            return Err("Current WebAssembly vesion does not allows multi-value return");
+        }
+
         let mut results_vec: Vec<u8> = vec![0; result_count];
         self.read_exact(&mut results_vec)
             .map_err(|_| "Read the count of results failed")?;
@@ -58,15 +63,17 @@ mod test {
     }
 
     #[test]
-    fn convert_collectly_i32_to_i32_i32() -> Result<(), String> {
+    fn convert_incollectly_i32_to_i32_i32() -> Result<(), String> {
         let src: Vec<u8> = vec![0x60u8, 0x01u8, 0x7fu8, 0x02u8, 0x7fu8, 0x7fu8];
-        let result: FuncType = (&src[..]).convert()?;
-        let params = vec![ValType::I32(None)];
-        let results = vec![ValType::I32(None), ValType::I32(None)];
-        let expected: FuncType = FuncType::new(params, results);
-
-        assert_eq!(expected, result);
-        Ok(())
+        let mut convertee = &src[..];
+        let expected = "Current WebAssembly vesion does not allows multi-value return";
+        let result: Result<FuncType, &str> = convertee.convert();
+        if let Err(msg) = result {
+            assert_eq!(expected, msg);
+            return Ok(());
+        } else {
+            panic!("Invalid behavior: Current WebAssembly cannot use multi-value return")
+        };
     }
 
     #[test]
