@@ -17,7 +17,7 @@ impl Converter<FuncType> for &[u8] {
         let mut params_vec: Vec<u8> = vec![0; param_count];
         self.read_exact(&mut params_vec)
             .map_err(|_| "Read the count of params failed")?;
-        let params: Vec<ValType> = params_vec.iter().map(|i| i.clone().into()).collect();
+        let params: Vec<ValType> = params_vec.iter().map(|&i| i.into()).collect();
         let result_count: usize = leb128::read::unsigned(self)
             .map_err(|_| "Error occured when read leb128 functype params")?
             as usize;
@@ -29,7 +29,7 @@ impl Converter<FuncType> for &[u8] {
         let mut results_vec: Vec<u8> = vec![0; result_count];
         self.read_exact(&mut results_vec)
             .map_err(|_| "Read the count of results failed")?;
-        let results: Vec<ValType> = results_vec.iter().map(|i| i.clone().into()).collect();
+        let results: Vec<ValType> = results_vec.iter().map(|&i| i.into()).collect();
 
         Ok(FuncType::new(params, results))
     }
