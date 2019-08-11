@@ -15,9 +15,10 @@ impl From<u8> for ValType {
 }
 
 impl Converter<ValType> for &[u8] {
-    fn convert(&mut self) -> Result<ValType, &str> {
+    fn convert(&mut self) -> Result<ValType, String> {
         let mut buf: [u8; 1] = [0; 1];
-        self.read_exact(&mut buf).map_err(|_| "I/O Error occured")?;
+        self.read_exact(&mut buf)
+            .map_err(|_| "I/O Error occured".to_owned())?;
         Ok(buf[0].into())
     }
 }
