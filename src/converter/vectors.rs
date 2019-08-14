@@ -3,7 +3,6 @@ use std::io::Read;
 
 impl<T, S> Converter<Vec<T>> for S
 where
-    T: Clone,
     S: Converter<T> + Read,
 {
     fn convert(&mut self) -> Result<Vec<T>, String> {
@@ -36,6 +35,15 @@ mod test {
             ValType::F32(None),
             ValType::F64(None),
         ];
+        assert_eq!(expected, result.unwrap());
+        Ok(())
+    }
+
+    #[test]
+    fn convert_collectly_vec_empty() -> Result<(), String> {
+        let src = vec![0x00u8];
+        let result: Result<Vec<ValType>, String> = (&src[..]).convert();
+        let expected: Vec<ValType> = vec![];
         assert_eq!(expected, result.unwrap());
         Ok(())
     }
