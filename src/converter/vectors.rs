@@ -47,4 +47,26 @@ mod test {
         assert_eq!(expected, result.unwrap());
         Ok(())
     }
+
+    #[test]
+    fn convert_collectly_vec_functype() -> Result<(), String> {
+        let src = vec![
+            0x02u8, // num functypes
+            0x60u8, 0x02u8, 0x7fu8, 0x7fu8, 0x01u8, 0x7eu8, // functype 0
+            0x60u8, 0x02u8, 0x7du8, 0x7du8, 0x01u8, 0x7cu8, // functype 1
+        ];
+        let result: Result<Vec<FuncType>, String> = (&src[..]).convert();
+        let expected = vec![
+            FuncType::new(
+                vec![ValType::I32(None), ValType::I32(None)],
+                vec![ValType::I64(None)],
+            ),
+            FuncType::new(
+                vec![ValType::F32(None), ValType::F32(None)],
+                vec![ValType::F64(None)],
+            ),
+        ];
+        assert_eq!(expected, result.unwrap());
+        Ok(())
+    }
 }
