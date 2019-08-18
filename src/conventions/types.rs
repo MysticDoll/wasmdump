@@ -30,7 +30,7 @@ impl Limits {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct MemType {
     limits: Limits,
 }
@@ -41,12 +41,12 @@ impl MemType {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ElemType {
-    FuncType,
+    FuncRef,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct TableType {
     elem_type: ElemType,
     limit: Limits,
@@ -58,7 +58,7 @@ impl TableType {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct GlobalType {
     valtype: ValType,
     r#mut: bool,
@@ -70,7 +70,7 @@ impl GlobalType {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ImportDesc {
     Func(FuncType),
     Table(TableType),
@@ -85,7 +85,7 @@ pub struct Import {
     import_desc: ImportDesc,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ExportDesc {
     Func(FuncType),
     Table(TableType),
@@ -93,37 +93,37 @@ pub enum ExportDesc {
     Global(GlobalType),
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Export {
     name: String,
     export_desc: ExportDesc,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Elem {
     table_index: u32,
     offset_expr: Vec<u8>,
     func_index: Vec<u8>,
 }
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Code {
     size: u32,
     code: Func,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Func {
     locals: Vec<Local>,
     expr: Vec<u8>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Local {
     num_locals: u32,
     r#type: ValType,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Data {
     mem_index: u32,
     offset_expr: Vec<u8>,

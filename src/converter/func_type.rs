@@ -7,7 +7,7 @@ impl Converter<FuncType> for &[u8] {
         let mut prefix: [u8; 1] = [0; 1];
         self.read_exact(&mut prefix)
             .map_err(|_| "I/O Error occured".to_owned())?;
-        if Some(0x60u8) != prefix.first().map(|i| i.clone()) {
+        if Some(&0x60u8) != prefix.first() {
             return Err("Invalid type declare. Type definition must have prefix 0x60".to_owned());
         }
         let param_count: usize = leb128::read::unsigned(self)

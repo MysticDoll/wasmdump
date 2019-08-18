@@ -1,5 +1,7 @@
+pub mod elemtype;
 pub mod func_type;
 pub mod limits;
+pub mod table;
 pub mod valtype;
 pub mod vectors;
 

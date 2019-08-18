@@ -28,23 +28,23 @@ mod test {
     #[test]
     fn convert_collectly_vec_valtype() -> Result<(), String> {
         let src = vec![0x04u8, 0x7fu8, 0x7eu8, 0x7du8, 0x7cu8];
-        let result: Result<Vec<ValType>, String> = (&src[..]).convert();
+        let result: Vec<ValType> = (&src[..]).convert()?;
         let expected = vec![
             ValType::I32(None),
             ValType::I64(None),
             ValType::F32(None),
             ValType::F64(None),
         ];
-        assert_eq!(expected, result.unwrap());
+        assert_eq!(expected, result);
         Ok(())
     }
 
     #[test]
-    fn convert_collectly_vec_empty() -> Result<(), String> {
+    fn convert_collectly_vec_valtype_empty() -> Result<(), String> {
         let src = vec![0x00u8];
-        let result: Result<Vec<ValType>, String> = (&src[..]).convert();
+        let result: Vec<ValType> = (&src[..]).convert()?;
         let expected: Vec<ValType> = vec![];
-        assert_eq!(expected, result.unwrap());
+        assert_eq!(expected, result);
         Ok(())
     }
 
@@ -55,7 +55,7 @@ mod test {
             0x60u8, 0x02u8, 0x7fu8, 0x7fu8, 0x01u8, 0x7eu8, // functype 0
             0x60u8, 0x02u8, 0x7du8, 0x7du8, 0x01u8, 0x7cu8, // functype 1
         ];
-        let result: Result<Vec<FuncType>, String> = (&src[..]).convert();
+        let result: Vec<FuncType> = (&src[..]).convert()?;
         let expected = vec![
             FuncType::new(
                 vec![ValType::I32(None), ValType::I32(None)],
@@ -66,7 +66,16 @@ mod test {
                 vec![ValType::F64(None)],
             ),
         ];
-        assert_eq!(expected, result.unwrap());
+        assert_eq!(expected, result);
+        Ok(())
+    }
+
+    #[test]
+    fn convert_collectly_vec_functype_empty() -> Result<(), String> {
+        let src = vec![0x00u8];
+        let result: Vec<FuncType> = (&src[..]).convert()?;
+        let expected: Vec<FuncType> = vec![];
+        assert_eq!(expected, result);
         Ok(())
     }
 }
