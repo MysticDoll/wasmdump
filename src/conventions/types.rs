@@ -133,7 +133,7 @@ pub struct Data {
 #[derive(Clone, Debug)]
 pub enum SectionBody {
     TypeSection(Vec<FuncType>),
-    ImportSection(Import),
+    ImportSection(Vec<Import>),
     FunctionSection(Vec<FuncType>),
     TableSection(Vec<TableType>),
     MemorySection(Vec<MemType>),
