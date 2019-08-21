@@ -72,10 +72,10 @@ impl GlobalType {
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum ImportDesc {
-    Func(FuncType),
-    Table(TableType),
-    Memory(MemType),
-    Global(GlobalType),
+    Func(u32),
+    Table(u32),
+    Memory(u32),
+    Global(u32),
 }
 
 #[derive(Clone, Debug)]
@@ -87,10 +87,10 @@ pub struct Import {
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum ExportDesc {
-    Func(FuncType),
-    Table(TableType),
-    Memory(MemType),
-    Global(GlobalType),
+    Func(u32),
+    Table(u32),
+    Memory(u32),
+    Global(u32),
 }
 
 #[derive(Clone, Debug, PartialEq)]
