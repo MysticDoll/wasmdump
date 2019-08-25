@@ -1,6 +1,8 @@
 pub mod elemtype;
+pub mod export_desc;
 pub mod func_type;
 pub mod global;
+pub mod import_desc;
 pub mod limits;
 pub mod memtype;
 pub mod table;
