@@ -85,6 +85,16 @@ pub struct Import {
     import_desc: ImportDesc,
 }
 
+impl Import {
+    pub fn new(r#mod: String, namespace: String, import_desc: ImportDesc) -> Import {
+        Import {
+            r#mod,
+            namespace,
+            import_desc,
+        }
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub enum ExportDesc {
     Func(u32),
