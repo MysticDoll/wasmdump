@@ -5,6 +5,7 @@ pub mod global;
 pub mod import_desc;
 pub mod limits;
 pub mod memtype;
+pub mod string;
 pub mod table;
 pub mod valtype;
 pub mod vectors;
