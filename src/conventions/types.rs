@@ -78,7 +78,7 @@ pub enum ImportDesc {
     Global(u32),
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Import {
     r#mod: String,
     namespace: String,
